@@ -2,7 +2,7 @@ import * as types from '../constants/actionTypes'
 
 const initialState = []
 
-const mainReducer = (state = initialState, action) => {
+const todoList = (state = initialState, action) => {
     switch (action.type) {
         case types.ADD_TODO:
             return [...state, { ...action.payload }]
@@ -48,17 +48,30 @@ const mainReducer = (state = initialState, action) => {
                     return item
                 }
             })
+        case types.SET_TODO_DESCRIPTION:
+            return state.map((item) => {
+                if (item.id === action.payload.id) {
+                    item.description = action.payload.description
+                    return item
+                } else {
+                    return item
+                }
+            })
+        case types.SET_CURRENT_TODO:
+            return state.map((item) => {
+                if (item.id === action.payload.id) {
+                    item.active = true
+                    return item
+                } else {
+                    item.active = false
+                    return item
+                }
+            })
         case types.DELETE_TODO:
             return state.filter((item) => item.id !== action.payload.id)
-        // -----------------------------------------------------------------------------------------
-        // test
-        case types.TOGGLE_TODO:
-            return state.map((item) => (item.id === action.payload.id ? { ...item, completed: !item.completed } : item))
-        // -----------------------------------------------------------------------------------------
-        // \test
         default:
             return state
     }
 }
 
-export default mainReducer
+export default todoList

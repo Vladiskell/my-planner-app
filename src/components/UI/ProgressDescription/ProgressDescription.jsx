@@ -22,7 +22,7 @@ const ProgressDescription = () => {
                 color: '#1976d2',
             },
             {
-                text: 'Other',
+                text: 'Active',
                 color: '#4caf50',
             },
         ]

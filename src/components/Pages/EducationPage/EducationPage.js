@@ -1,5 +1,5 @@
-import React from 'react';
-import { EDUCATION_TODOS } from "../../../api/constants";
+import React from 'react'
+import { EDUCATION_TODOS } from '../../../api/constants'
 
 import Todo from '../../Parts/Todo/Todo'
 import Description from '../../Parts/Description/Description'
@@ -16,10 +16,10 @@ export const EducationPage = () => {
                 <Todo title="Education Todo List" collectionName={EDUCATION_TODOS} />
             </GridItem>
             <GridItem columnStart={2} columnEnd={3} rowStart={1} rowEnd={2}>
-                <Description />
+                <Progress />
             </GridItem>
             <GridItem columnStart={2} columnEnd={3} rowStart={2} rowEnd={3}>
-                <Progress />
+                <Description />
             </GridItem>
             <GridItem columnStart={2} columnEnd={4} rowStart={3} rowEnd={5}>
                 <Timer />

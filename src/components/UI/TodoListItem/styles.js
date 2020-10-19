@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme) => ({
         flexGrow: '1',
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(2),
+        cursor: 'pointer',
     },
     label: {
         margin: '0 !important',

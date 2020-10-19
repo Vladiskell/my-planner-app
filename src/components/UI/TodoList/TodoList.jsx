@@ -3,14 +3,14 @@ import { useStyles } from './styles'
 import { connect, useDispatch } from 'react-redux'
 
 import * as API from '../../../api/todos'
-import { setTodoListAction } from '../../../redux/actions/actions'
+import { setTodoListAction, toggleTodo, VisibilityFilters } from '../../../redux/actions/actions'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
 import TodoListItem from '../TodoListItem/TodoListItem'
 
 // ---------------------------------------------------------------------------------------------------------------------
 // component
-const TodoList = ({ todos, collectionName }) => {
+const TodoList = ({ todoList, collectionName }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
@@ -26,7 +26,7 @@ const TodoList = ({ todos, collectionName }) => {
     return (
         <div className={classes.list}>
             {isLoading ? (
-                todos.map((item) => <TodoListItem key={item.id} props={item} collectionName={collectionName} />)
+                todoList.map((item) => <TodoListItem key={item.id} props={item} collectionName={collectionName} />)
             ) : (
                 <div className={classes.progress}>
                     <CircularProgress />
@@ -40,7 +40,7 @@ const TodoList = ({ todos, collectionName }) => {
 // connect
 const mapStateToProps = (state) => {
     return {
-        todos: state.mainReducer,
+        todoList: state.todoList,
     }
 }
 

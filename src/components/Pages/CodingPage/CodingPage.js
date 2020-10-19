@@ -16,10 +16,10 @@ export const CodingPage = () => {
                 <Todo title="Coding Todo List" collectionName={CODING_TODOS} />
             </GridItem>
             <GridItem columnStart={2} columnEnd={3} rowStart={1} rowEnd={2}>
-                <Description />
+                <Progress />
             </GridItem>
             <GridItem columnStart={2} columnEnd={3} rowStart={2} rowEnd={3}>
-                <Progress />
+                <Description />
             </GridItem>
             <GridItem columnStart={2} columnEnd={4} rowStart={3} rowEnd={5}>
                 <Timer />

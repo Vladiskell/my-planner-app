@@ -7,6 +7,8 @@ import * as API from '../../../api/todos'
 import {
     deleteTodoAction,
     editTodoAction,
+    setCurrentTodoAction,
+    setTodoDescriptionAction,
     setTodoIsCompletedAction,
     setTodoIsImportantAction,
     setTodoIsProcessAction,
@@ -19,19 +21,36 @@ import ItemMenu from './ItemMenu'
 
 import EditField from './EditField'
 import Badges from './Badges'
+import TodoDescriptionModal from '../TodoDescriptionModal/TodoDescriptionModal'
 
 // -------------------------------------------------------------------------------------------------
 // component
-const TodoListItem = ({ props, collectionName, onProgress }) => {
+const TodoListItem = ({ props, collectionName }) => {
     const classes = useStyles()
     const dispatch = useDispatch()
 
     const [defaultText, setDefaultText] = useState(props.text)
     const [isEdit, setIsEdit] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
+    const [modalFieldValue, setModalFieldValue] = React.useState(props.description)
+
+    const handleModalFieldChange = (event) => setModalFieldValue(event.target.value)
 
     const onChange = (e) => setDefaultText(e.target.value)
 
     const onEdit = () => setIsEdit(true)
+
+    const onModalOpen = () => setModalOpen(true)
+
+    const onModalClose = () => setModalOpen(false)
+
+    const onCurrentItem = () => dispatch(setCurrentTodoAction(props.id))
+
+    const onModalSubmit = async () => {
+        await API.setTodoDescription(collectionName, props.id, modalFieldValue)
+        dispatch(setTodoDescriptionAction(props.id, modalFieldValue))
+        setModalOpen(false)
+    }
 
     const onSave = async () => {
         await API.editTodo(collectionName, props.id, defaultText)
@@ -72,7 +91,7 @@ const TodoListItem = ({ props, collectionName, onProgress }) => {
                         onChange={onCompleted}
                     />
 
-                    <Typography className={classes.text} variant="body1">
+                    <Typography className={classes.text} variant="body1" onClick={onCurrentItem}>
                         {defaultText}
                     </Typography>
 
@@ -87,11 +106,19 @@ const TodoListItem = ({ props, collectionName, onProgress }) => {
                         onProcess={onProcess}
                         onEdit={onEdit}
                         onDelete={onDelete}
+                        onModalOpen={onModalOpen}
                     />
                 </div>
             ) : (
                 <EditField defaultText={defaultText} onChange={onChange} onSave={onSave} />
             )}
+            <TodoDescriptionModal
+                open={modalOpen}
+                onClose={onModalClose}
+                onSubmit={onModalSubmit}
+                description={modalFieldValue}
+                onChange={handleModalFieldChange}
+            />
         </React.Fragment>
     )
 }

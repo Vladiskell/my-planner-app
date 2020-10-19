@@ -11,6 +11,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import PriorityHighIcon from '@material-ui/icons/PriorityHigh'
 import SpellcheckIcon from '@material-ui/icons/Spellcheck'
 import Switch from '@material-ui/core/Switch'
+import BuildOutlinedIcon from '@material-ui/icons/BuildOutlined'
 
 const ItemMenu = (props) => {
     const classes = useStyles()
@@ -37,6 +38,11 @@ const ItemMenu = (props) => {
                 switch: <Switch className={classes.switch} size={'small'} checked={props.important} />,
                 function: props.onImportant,
                 important: props.important,
+            },
+            {
+                text: 'Description',
+                icon: <BuildOutlinedIcon className={classes.menuIcon} />,
+                function: props.onModalOpen,
             },
             {
                 text: 'Edit',

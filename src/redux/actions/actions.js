@@ -1,5 +1,5 @@
-import { uuid } from "uuidv4";
-import * as types from '../constants/actionTypes';
+import { uuid } from 'uuidv4'
+import * as types from '../constants/actionTypes'
 
 export const addTodoAction = (text) => ({
     type: types.ADD_TODO,
@@ -9,47 +9,45 @@ export const addTodoAction = (text) => ({
         completed: false,
         important: false,
         process: false,
-    }
-});
+    },
+})
 
 export const setTodoListAction = (todoList) => ({
     type: types.SET_TODO_LIST,
-    payload: { todoList }
-});
+    payload: { todoList },
+})
 
 export const deleteTodoAction = (id) => ({
     type: types.DELETE_TODO,
-    payload: { id }
-});
+    payload: { id },
+})
 
 export const setTodoIsCompletedAction = (id) => ({
     type: types.SET_IS_TODO_COMPLETED,
-    payload: { id }
-});
+    payload: { id },
+})
 
 export const setTodoIsImportantAction = (id) => ({
     type: types.SET_IS_TODO_IMPORTANT,
-    payload: { id }
-});
+    payload: { id },
+})
 
 export const setTodoIsProcessAction = (id) => ({
     type: types.SET_IS_TODO_PROCESS,
-    payload: { id }
+    payload: { id },
 })
 
 export const editTodoAction = (id, text) => ({
     type: types.EDIT_TODO,
-    payload: { id, text }
-});
-
-export const toggleTodoListAction = (id) => ({
-    type: types.TOGGLE_TODO,
-    payload: { id }
+    payload: { id, text },
 })
 
-export const setVisibilityFilterAction = (filter) => ({
-    type: types.SET_VISIBILITY_FILTER,
-    payload: { filter }
+export const setTodoDescriptionAction = (id, description) => ({
+    type: types.SET_TODO_DESCRIPTION,
+    payload: { id, description },
 })
 
-
+export const setCurrentTodoAction = (id) => ({
+    type: types.SET_CURRENT_TODO,
+    payload: { id },
+})

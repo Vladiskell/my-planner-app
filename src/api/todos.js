@@ -1,7 +1,7 @@
 import { firestore } from '../firebase/firebase.config'
 import { uuid } from 'uuidv4'
 
-// post new todo item in database
+// post new todoList item in database
 export const postTodo = (collectionName, todoText) => {
     return firestore
         .collection(collectionName)
@@ -13,21 +13,21 @@ export const postTodo = (collectionName, todoText) => {
             process: false,
         })
         .then(function (docRef) {
-            console.log('New todo is added')
+            console.log('New todoList is added')
         })
         .catch(function (error) {
-            console.error('Error! new todo not added', error)
+            console.error('Error! new todoList not added', error)
         })
 }
 
-// get todo list from data base
+// get todoList list from data base
 export const getTodoList = async (collectionName) => {
     const data = await firestore.collection(collectionName).get()
 
     return data.docs.map((doc) => doc.data())
 }
 
-// delete todo item from data base
+// delete todoList item from data base
 export const deleteTodo = (collectionName, id) => {
     firestore
         .collection(collectionName)
@@ -43,14 +43,14 @@ export const deleteTodo = (collectionName, id) => {
                             console.log('Todo was deleted')
                         })
                         .catch(function (error) {
-                            console.error('Error deleting todo: ', error)
+                            console.error('Error deleting todoList: ', error)
                         })
                 }
             })
         })
 }
 
-// set todo item completed in data base
+// set todoList item completed in data base
 export const setTodoIsCompleted = (collectionName, id) => {
     firestore
         .collection(collectionName)
@@ -68,7 +68,7 @@ export const setTodoIsCompleted = (collectionName, id) => {
         })
 }
 
-// set todo item important in data base
+// set todoList item important in data base
 export const setTodoIsImportant = (collectionName, id) => {
     firestore
         .collection(collectionName)
@@ -85,7 +85,7 @@ export const setTodoIsImportant = (collectionName, id) => {
         })
 }
 
-// set todo item in process in data base
+// set todoList item in process in data base
 export const setTodoIsProcess = (collectionName, id) => {
     firestore
         .collection(collectionName)
@@ -102,7 +102,7 @@ export const setTodoIsProcess = (collectionName, id) => {
         })
 }
 
-// edit todo item in data base
+// edit todoList item in data base
 export const editTodo = (collectionName, id, todoText) => {
     firestore
         .collection(collectionName)
@@ -112,6 +112,22 @@ export const editTodo = (collectionName, id, todoText) => {
                 if (doc.data().id === id) {
                     firestore.collection(collectionName).doc(doc.id).update({
                         text: todoText,
+                    })
+                }
+            })
+        })
+}
+
+// set and edit todo item description
+export const setTodoDescription = (collectionName, id, todoDescription) => {
+    firestore
+        .collection(collectionName)
+        .get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                if (doc.data().id === id) {
+                    firestore.collection(collectionName).doc(doc.id).update({
+                        description: todoDescription,
                     })
                 }
             })

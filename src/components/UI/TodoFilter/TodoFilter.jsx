@@ -1,44 +1,43 @@
-import React, { useState } from 'react';
-import { useStyles } from './styles';
-import { uuid } from 'uuidv4';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react'
+import { useStyles } from './styles'
+import { uuid } from 'uuidv4'
+import { useDispatch, connect } from 'react-redux'
 
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
 
 // -------------------------------------------------------------------------------------------------
 // component
 const TodoFilter = () => {
-    const classes = useStyles();
-    const dispatch = useDispatch();
-    const [active, setActive] = useState(0);
+    const classes = useStyles()
+    const dispatch = useDispatch()
+    const [active, setActive] = useState(0)
 
     const handleClick = (e) => {
-        setActive(Number(e.currentTarget.dataset.index));
-    };
+        setActive(Number(e.currentTarget.dataset.index))
+    }
 
     const buttons = [
         {
             text: 'All',
             onClick: (e) => {
-                console.log('all');
-                handleClick(e);
+                console.log('all')
+                handleClick(e)
             },
         },
         {
             text: 'Completed',
             onClick: (e) => {
-                console.log('completed');
-                handleClick(e);
+                handleClick(e)
             },
         },
         {
             text: 'Important',
             onClick: (e) => {
-                console.log('important');
-                handleClick(e);
+                console.log('important')
+                handleClick(e)
             },
         },
-    ];
+    ]
 
     return (
         <div className={classes.filter}>
@@ -46,8 +45,8 @@ const TodoFilter = () => {
                 <Button
                     key={uuid()}
                     variant={index === active ? 'contained' : 'outlined'}
-                    size='small'
-                    color='primary'
+                    size="small"
+                    color="primary"
                     disableElevation
                     data-index={index}
                     onClick={(e) => onClick(e)}
@@ -56,7 +55,7 @@ const TodoFilter = () => {
                 </Button>
             ))}
         </div>
-    );
-};
+    )
+}
 
-export default TodoFilter;
+export default TodoFilter
