@@ -7,7 +7,7 @@ import Progress from '../../Parts/Progress/Progress'
 import Report from '../../Parts/Report/Report'
 import Timer from '../../Parts/Timer/Timer'
 import GridContainer from '../../UI/GridContainer/GridContainer'
-import GridItem from '../../UI/GridIthttps://gitlab.com/Vladiskell/my-planner.gitem/GridItem'
+import GridItem from '../../UI/GridItem/GridItem'
 
 export const CodingPage = () => {
     return (
