@@ -1,25 +1,29 @@
 import React, { useEffect } from 'react';
 import { useStyles } from './styles';
+import { useSelector } from 'react-redux';
 
-import Paper from "@material-ui/core/Paper";
-import AddTodo from '../../UI/AddTodo/AddTodo'
-import TodoFilter from '../../UI/TodoFilter/TodoFilter'
-import TodoList from '../../UI/TodoList/TodoList'
-import BlockHeader from '../../UI/BlockHeader/BlockHeader'
+import { todoCategoryGet } from '../../../redux/todos/selectors/selectors';
 
-// -------------------------------------------------------------------------------------------------
+import AddTodo from '../../UI/TodoAddForm/TodoAddForm';
+import TodoFilter from '../../UI/TodoFilter/TodoFilter';
+import TodoList from '../../UI/TodoList/TodoList';
+import Block from '../../Layouts/Block/Block';
+
+// ---------------------------------------------------------------------------------------------------------------------
 // component
-const Todo = ({ title, collectionName }) => {
+const Todo = () => {
     const classes = useStyles();
+    const category = useSelector(todoCategoryGet);
 
     return (
-        <Paper className={classes.todo}>
-            <BlockHeader title={title} />
-            <AddTodo collectionName={collectionName} />
-            <TodoFilter />
-            <TodoList collectionName={collectionName} />
-        </Paper>
-    )
+        <Block title={`${category.toUpperCase()} Todo List`}>
+            <div className={classes.todo}>
+                <AddTodo />
+                <TodoFilter />
+                <TodoList />
+            </div>
+        </Block>
+    );
 };
 
 export default Todo;

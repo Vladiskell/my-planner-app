@@ -1,5 +1,9 @@
-export const EDUCATION_TODOS = 'education_todos'
+export const TODOS = 'todos';
 
-export const CODING_TODOS = 'coding_todos'
+export const EDUCATION = 'education';
 
-export const NOTES_TODOS = 'notes_todos'
+export const CODING = 'coding';
+
+export const NOTES = 'notes';
+
+export const REVIEW = 'review';

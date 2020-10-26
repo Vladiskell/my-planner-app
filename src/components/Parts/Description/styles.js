@@ -1,10 +1,15 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     description: {
         height: '100%',
     },
     descriptionBody: {
-        padding: theme.spacing(2),
+        padding: '16px 24px',
     },
-}))
+    iconButton: {
+        color: '#fff',
+        marginLeft: 'auto',
+        marginRight: -8,
+    },
+}));

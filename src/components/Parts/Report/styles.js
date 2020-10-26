@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
-    report: {
-        height: '100%',
-        maxHeight: '100%',
-        overflowY: 'auto',
-    }
-}))
-
+    inner: {
+        '& > *': {
+            marginBottom: theme.spacing(1),
+            fontSize: 15,
+        },
+    },
+}));

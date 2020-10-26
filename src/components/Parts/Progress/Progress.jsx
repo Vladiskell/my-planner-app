@@ -1,22 +1,25 @@
-import React from 'react'
-import { useStyles } from './styles'
+import React from 'react';
+import { useStyles } from './styles';
 
-import Paper from '@material-ui/core/Paper'
+import Paper from '@material-ui/core/Paper';
 
-import ProgressChart from '../../UI/ProgressChart/ProgressChart'
-import ProgressDescription from '../../UI/ProgressDescription/ProgressDescription'
+import ProgressChart from '../../UI/ProgressChart/ProgressChart';
+import ProgressDescription from '../../UI/ProgressDescription/ProgressDescription';
+import Block from '../../Layouts/Block/Block';
 
 // -------------------------------------------------------------------------------------------------
 // component
 const Progress = () => {
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
-        <Paper className={classes.progress}>
-            <ProgressChart />
-            <ProgressDescription />
-        </Paper>
-    )
-}
+        <Block isHeader={false} centerBody>
+            <div className={classes.progress}>
+                <ProgressChart />
+                <ProgressDescription />
+            </div>
+        </Block>
+    );
+};
 
-export default Progress
+export default Progress;

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     progressDescription: {
@@ -11,6 +11,10 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+
+        '& h6': {
+            marginBottom: theme.spacing(1),
+        },
     },
     line: {
         display: 'flex',
@@ -23,4 +27,4 @@ export const useStyles = makeStyles((theme) => ({
         marginRight: theme.spacing(2),
         borderRadius: '50%',
     },
-}))
+}));

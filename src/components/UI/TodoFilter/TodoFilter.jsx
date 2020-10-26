@@ -1,61 +1,47 @@
-import React, { useState } from 'react'
-import { useStyles } from './styles'
-import { uuid } from 'uuidv4'
-import { useDispatch, connect } from 'react-redux'
+import React, { useMemo, useState } from 'react';
+import { useStyles } from './styles';
+import { useDispatch, connect } from 'react-redux';
 
-import Button from '@material-ui/core/Button'
+import { todoFilter } from '../../../redux/todos/actions/actions';
 
-// -------------------------------------------------------------------------------------------------
+import Button from '@material-ui/core/Button';
+
+// ---------------------------------------------------------------------------------------------------------------------
 // component
 const TodoFilter = () => {
-    const classes = useStyles()
-    const dispatch = useDispatch()
-    const [active, setActive] = useState(0)
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const [active, setActive] = useState(0);
 
     const handleClick = (e) => {
-        setActive(Number(e.currentTarget.dataset.index))
-    }
+        setActive(Number(e.currentTarget.dataset.index));
+    };
 
-    const buttons = [
-        {
-            text: 'All',
-            onClick: (e) => {
-                console.log('all')
-                handleClick(e)
-            },
-        },
-        {
-            text: 'Completed',
-            onClick: (e) => {
-                handleClick(e)
-            },
-        },
-        {
-            text: 'Important',
-            onClick: (e) => {
-                console.log('important')
-                handleClick(e)
-            },
-        },
-    ]
+    const buttons = useMemo(() => ['All', 'Completed', 'Uncompleted', 'Important']);
+
+    const onButtonClick = (e) => {
+        const { name } = e.currentTarget;
+        handleClick(e);
+        dispatch(todoFilter(name));
+    };
 
     return (
         <div className={classes.filter}>
-            {buttons.map(({ onClick, text }, index) => (
+            {buttons.map((item, index) => (
                 <Button
-                    key={uuid()}
+                    key={item}
                     variant={index === active ? 'contained' : 'outlined'}
+                    name={item}
                     size="small"
                     color="primary"
-                    disableElevation
                     data-index={index}
-                    onClick={(e) => onClick(e)}
+                    onClick={onButtonClick}
                 >
-                    {text}
+                    {item}
                 </Button>
             ))}
         </div>
-    )
-}
+    );
+};
 
-export default TodoFilter
+export default TodoFilter;

@@ -1,9 +1,12 @@
 import React from 'react';
 import { useStyles } from './styles';
+import { Route, Switch } from 'react-router-dom';
 
-import AppBar from '../Layouts/AppBar/AppBar'
-import SideBar from '../Layouts/SideBar/SideBar'
-import Main from '../Layouts/Main/Main'
+import SideBar from '../Parts/SideBar/SideBar';
+import { CodingPage } from '../Pages/CodingPage/CodingPage';
+import { EducationPage } from '../Pages/EducationPage/EducationPage';
+import { ReviewPage } from '../Pages/ReviewPage/ReviewPage';
+import { NotesPage } from '../Pages/NotesPage/NotesPage';
 
 // -------------------------------------------------------------------------------------------------
 // component
@@ -12,12 +15,17 @@ const App = () => {
 
     return (
         <div className={classes.app}>
-            {/*<AppBar />*/}
             <SideBar />
-            <Main />
+            <main>
+                <Switch>
+                    <Route exact path="/" component={CodingPage} />
+                    <Route path="/education" component={EducationPage} />
+                    <Route path="/review" component={ReviewPage} />
+                    <Route path="/notes" component={NotesPage} />
+                </Switch>
+            </main>
         </div>
     );
 };
 
 export default App;
-

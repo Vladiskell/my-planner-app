@@ -1,0 +1,21 @@
+export const SET_TODO_CATEGORY = 'SET_TODO_CATEGORY';
+
+export const ADD_TODO = 'ADD_TODO';
+
+export const SET_TODO_LIST = 'SET_TODO_LIST';
+
+export const SET_IS_TODO_COMPLETED = 'SET_TODO_IS_COMPLETED';
+
+export const SET_IS_TODO_IMPORTANT = 'SET_IS_TODO_IMPORTANT';
+
+export const SET_IS_TODO_PROCESS = 'SET_IS_TODO_PROCESS';
+
+export const EDIT_TODO_TITLE = 'EDIT_TODO_TITLE';
+
+export const EDIT_TODO_DESCRIPTION = 'SET_TODO_DESCRIPTION';
+
+export const DELETE_TODO = 'DELETE_TODO';
+
+export const SET_CURRENT_TODO = 'SET_CURRENT_TODO';
+
+export const FILTER_TODO = 'FILTER_TODO';

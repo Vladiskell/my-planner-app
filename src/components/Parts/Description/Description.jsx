@@ -1,35 +1,33 @@
-import React from 'react'
-import { useStyles } from './styles'
-import Paper from '@material-ui/core/Paper'
-import BlockHeader from '../../UI/BlockHeader/BlockHeader'
-import { Typography } from '@material-ui/core'
-import { connect } from 'react-redux'
+import React from 'react';
+import { useStyles } from './styles';
+import { useDispatch, useSelector } from 'react-redux';
 
-// -------------------------------------------------------------------------------------------------
+import { currentTodoGet } from '../../../redux/todos/selectors/selectors';
+import { modalsOpenAction } from '../../../redux/modals/actions/actions';
+
+import { Typography, IconButton, Paper } from '@material-ui/core';
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+
+import Block from '../../Layouts/Block/Block';
+
+// ---------------------------------------------------------------------------------------------------------------------
 // component
-const Description = ({ todoList }) => {
-    const classes = useStyles()
+const Description = () => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const currentTodo = useSelector(currentTodoGet);
 
-    let currentItem = todoList.find((item) => item.active)
-
-    if (currentItem === undefined) {
-        currentItem = todoList[0]
-    }
+    const headerButton = (
+        <IconButton className={classes.iconButton} onClick={() => dispatch(modalsOpenAction())}>
+            <BorderColorIcon fontSize={'small'} />
+        </IconButton>
+    );
 
     return (
-        <Paper className={classes.description}>
-            <BlockHeader title={currentItem && currentItem.text} />
-            <div className={classes.descriptionBody}>
-                <Typography variant={'body1'}>{currentItem && currentItem.description}</Typography>
-            </div>
-        </Paper>
-    )
-}
+        <Block title={currentTodo && currentTodo.title} headerChildren={headerButton}>
+            <Typography variant={'body1'}>{currentTodo && currentTodo.description}</Typography>
+        </Block>
+    );
+};
 
-const mapStateToProps = (state) => {
-    return {
-        todoList: state.todoList,
-    }
-}
-
-export default connect(mapStateToProps)(Description)
+export default Description;

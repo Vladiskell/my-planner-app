@@ -1,43 +1,42 @@
-import React from 'react'
-import { useStyles } from './styles'
-import { PieChart, Pie, Cell } from 'recharts'
-import { connect } from 'react-redux'
+import React from 'react';
+import { useStyles } from './styles';
+import { connect, useSelector } from 'react-redux';
 
-// -------------------------------------------------------------------------------------------------
+import { PieChart, Pie, Cell } from 'recharts';
+import { todoListGet } from '../../../redux/todos/selectors/selectors';
+import { mocksTodos } from '../../../__mocks__/todos';
+
+// ---------------------------------------------------------------------------------------------------------------------
 // component
-const ProgressChart = ({ todoList }) => {
-    const classes = useStyles()
+const ProgressChart = () => {
+    const classes = useStyles();
+    const todoList = useSelector(todoListGet);
 
-    const processTodos = todoList.filter((item) => item.process).length
-    const importantTodos = todoList.filter((item) => item.important).length
-    const completedTodos = todoList.filter((item) => item.completed).length
-    const otherTodos = todoList.length - processTodos - importantTodos - completedTodos
+    const processTodos = todoList.filter((item) => item.statuses.process).length;
+    const importantTodos = todoList.filter((item) => item.statuses.important).length;
+    const completedTodos = todoList.filter((item) => item.statuses.completed).length;
+    const otherTodos = todoList.length - processTodos - importantTodos - completedTodos;
 
     const data = [
         { name: 'In process', value: processTodos },
         { name: 'Important', value: importantTodos },
         { name: 'Completed', value: completedTodos },
-        { name: 'Active', value: otherTodos },
-    ]
-    const COLORS = ['#ff9800', '#f45b68', '#1976d2', '#4caf50']
+        { name: 'Other', value: otherTodos },
+    ];
+
+    const COLORS = ['#ff9800', '#f45b68', '#1976d2', '#4caf50'];
 
     return (
         <div className={classes.pieChart}>
-            <PieChart width={240} height={240}>
-                <Pie data={data} cx={115} cy={115} innerRadius={75} outerRadius={90} paddingAngle={3} label>
+            <PieChart width={250} height={250}>
+                <Pie data={data} cx={124} cy={126} innerRadius={75} outerRadius={90} paddingAngle={3} label>
                     {data.map((entry, index) => (
                         <Cell fill={COLORS[index % COLORS.length]} />
                     ))}
                 </Pie>
             </PieChart>
         </div>
-    )
-}
+    );
+};
 
-const mapStateToProps = (state) => {
-    return {
-        todoList: state.todoList,
-    }
-}
-
-export default connect(mapStateToProps)(ProgressChart)
+export default ProgressChart;

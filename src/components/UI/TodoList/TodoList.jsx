@@ -1,47 +1,58 @@
-import React, { useEffect, useState } from 'react'
-import { useStyles } from './styles'
-import { connect, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useStyles } from './styles';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-import * as API from '../../../api/todos'
-import { setTodoListAction, toggleTodo, VisibilityFilters } from '../../../redux/actions/actions'
+import * as API from '../../../api/todosApi';
+import { setTodoListAction } from '../../../redux/todos/actions/actions';
 
-import CircularProgress from '@material-ui/core/CircularProgress'
-import TodoListItem from '../TodoListItem/TodoListItem'
+import CircularProgress from '@material-ui/core/CircularProgress';
+import TodoItem from '../TodoItem/TodoItem';
+import { todoCategoryGet, todoFilterGet, todoListGet } from '../../../redux/todos/selectors/selectors';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // component
-const TodoList = ({ todoList, collectionName }) => {
-    const classes = useStyles()
-    const dispatch = useDispatch()
+const TodoList = () => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const todoList = useSelector(todoListGet);
+    const filter = useSelector(todoFilterGet);
+    const category = useSelector(todoCategoryGet);
 
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        API.getTodoList(collectionName).then((result) => {
-            dispatch(setTodoListAction(result))
-            setIsLoading(true)
-        })
-    }, [])
+        API.getTodoList(category).then((result) => {
+            dispatch(setTodoListAction(result));
+            setIsLoading(true);
+        });
+    }, []);
+
+    const todoFilter = () => {
+        switch (filter) {
+            case 'Completed':
+                return todoList.filter((item) => item.statuses.completed);
+            case 'Important':
+                return todoList.filter((item) => item.statuses.important);
+            case 'Uncompleted':
+                return todoList.filter((item) => !item.statuses.completed);
+            default:
+                return todoList;
+        }
+    };
+
+    const todoItems = todoFilter();
 
     return (
         <div className={classes.list}>
             {isLoading ? (
-                todoList.map((item) => <TodoListItem key={item.id} props={item} collectionName={collectionName} />)
+                todoItems.map((item) => <TodoItem key={item.id} props={item} />)
             ) : (
                 <div className={classes.progress}>
                     <CircularProgress />
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-// ---------------------------------------------------------------------------------------------------------------------
-// connect
-const mapStateToProps = (state) => {
-    return {
-        todoList: state.todoList,
-    }
-}
-
-export default connect(mapStateToProps)(TodoList)
+export default TodoList;
