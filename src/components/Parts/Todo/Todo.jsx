@@ -13,10 +13,10 @@ import Block from '../../Layouts/Block/Block';
 // component
 const Todo = () => {
     const classes = useStyles();
-    const category = useSelector(todoCategoryGet);
+    const currentCategory = useSelector(todoCategoryGet);
 
     return (
-        <Block title={`${category.toUpperCase()} Todo List`}>
+        <Block title={`${currentCategory.toUpperCase()} Todo List`}>
             <div className={classes.todo}>
                 <AddTodo />
                 <TodoFilter />

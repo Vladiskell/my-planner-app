@@ -16,16 +16,16 @@ const TodoList = () => {
     const dispatch = useDispatch();
     const todoList = useSelector(todoListGet);
     const filter = useSelector(todoFilterGet);
-    const category = useSelector(todoCategoryGet);
+    const currentCategory = useSelector(todoCategoryGet);
 
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        API.getTodoList(category).then((result) => {
+        API.getTodoList(currentCategory).then((result) => {
             dispatch(setTodoListAction(result));
             setIsLoading(true);
         });
-    }, []);
+    }, [currentCategory]);
 
     const todoFilter = () => {
         switch (filter) {

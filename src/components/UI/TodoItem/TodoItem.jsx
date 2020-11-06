@@ -10,8 +10,8 @@ import {
     setTodoIsCompletedAction,
     setTodoIsImportantAction,
     setTodoIsProcessAction,
-    editTodoDescriptionAction,
     editTodoTitleAction,
+    setTimesheetStatus,
 } from '../../../redux/todos/actions/actions';
 import { currentTodoGet, todoCategoryGet } from '../../../redux/todos/selectors/selectors';
 
@@ -22,13 +22,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Badge from '../Badge/Badge';
 import TodoEditForm from '../TodoEditForm/TodoEditForm';
 import TodoMenu from '../TodoMenu/TodoMenu';
+import { reportAddAction } from '../../../redux/report/actions/actions';
 
 // -------------------------------------------------------------------------------------------------
 // component
 const TodoItem = ({ props }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const category = useSelector(todoCategoryGet);
+    const currentCategory = useSelector(todoCategoryGet);
 
     const [title, setTitle] = useState(props.title);
     const [isEdit, setIsEdit] = useState(false);
@@ -42,7 +43,12 @@ const TodoItem = ({ props }) => {
     };
 
     const onEditTitle = async () => {
-        await API.updateTodo(category, props.id, 'title', title);
+        await API.updateTodo(currentCategory, props.id, 'title', title);
+
+        API.postReport(currentCategory, title, props.id, 'Changed').then((report) => {
+            dispatch(reportAddAction(report));
+        });
+
         dispatch(editTodoTitleAction(props.id, title));
         setIsEdit(false);
     };
@@ -50,26 +56,52 @@ const TodoItem = ({ props }) => {
     const onCompleted = async () => {
         const value = !props.statuses.completed;
 
-        await API.updateTodo(category, props.id, 'completed', value);
+        await API.updateTodo(currentCategory, props.id, 'completed', value);
+
+        if (value) {
+            await API.postReport(currentCategory, title, props.id, 'Completed').then((report) => {
+                dispatch(reportAddAction(report));
+            });
+        }
+
         dispatch(setTodoIsCompletedAction(props.id));
     };
 
     const onImportant = async () => {
         const value = !props.statuses.important;
 
-        await API.updateTodo(category, props.id, 'important', value);
+        await API.updateTodo(currentCategory, props.id, 'important', value);
+
+        if (value) {
+            await API.postReport(currentCategory, title, props.id, 'Important').then((report) => {
+                dispatch(reportAddAction(report));
+            });
+        }
+
         dispatch(setTodoIsImportantAction(props.id));
     };
 
     const onProcess = async () => {
         const value = !props.statuses.process;
 
-        await API.updateTodo(category, props.id, 'process', value);
+        await API.updateTodo(currentCategory, props.id, 'process', value);
+        // await API.updateTodo(currentCategory, props.id, 'timer', value);
+
+        if (value) {
+            await API.postReport(currentCategory, title, props.id, 'In process').then((report) => {
+                dispatch(reportAddAction(report));
+            });
+        }
+
         dispatch(setTodoIsProcessAction(props.id));
+        dispatch(setTimesheetStatus(props.id));
     };
 
     const onDelete = async () => {
-        await API.deleteTodo(category, props.id);
+        await API.deleteTodo(currentCategory, props.id);
+        await API.postReport(currentCategory, title, props.id, 'Deleted').then((report) => {
+            dispatch(reportAddAction(report));
+        });
         dispatch(deleteTodoAction(props.id));
     };
 

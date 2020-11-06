@@ -1,30 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import { useStyles } from './styles';
+import * as API from '../../../api/todosApi';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { currentTodoGet, inProcessTodoGet } from '../../../redux/todos/selectors/selectors';
+import { setTimesheetStatus } from '../../../redux/todos/actions/actions';
 
 import { Typography } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 
 import Block from '../../Layouts/Block/Block';
 
-// -------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 // component
 const Timer = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const inProcessTodo = useSelector(inProcessTodoGet);
+
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [hours, setHours] = useState(0);
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState((inProcessTodo && inProcessTodo.timesheet.status) || false);
 
-    const onStart = () => setIsActive(true);
-    const onPause = () => setIsActive(false);
-    const onReset = () => {
+    const onStart = async () => {
+        await API.updateTodo('coding', inProcessTodo.id, 'timer', true);
+        setIsActive(true);
+        dispatch(setTimesheetStatus(inProcessTodo.id));
+    };
+
+    const onPause = async () => {
+        await API.updateTodo('coding', inProcessTodo.id, 'timer', false);
+        setIsActive(false);
+        dispatch(setTimesheetStatus(inProcessTodo.id));
+    };
+
+    const onReset = async () => {
+        await API.updateTodo('coding', inProcessTodo.id, 'timer', false);
         setIsActive(false);
         setSeconds(0);
         setMinutes(0);
         setHours(0);
+        dispatch(setTimesheetStatus(inProcessTodo.id));
     };
 
     useEffect(() => {
+        setIsActive(inProcessTodo && inProcessTodo.timesheet.status);
+
         let internal = null;
         if (isActive) {
             internal = setInterval(() => {
@@ -48,12 +70,15 @@ const Timer = () => {
             clearInterval(internal);
         }
         return () => clearInterval(internal);
-    }, [isActive, seconds]);
+    }, [isActive, seconds, inProcessTodo && inProcessTodo.statuses.process]);
 
     const time = `${hours < 10 ? 0 : ''}${hours}:${minutes < 10 ? 0 : ''}${minutes}:${seconds < 10 ? 0 : ''}${seconds}`;
 
     return (
         <Block isHeader={false} centerBody>
+            <Typography variant={'h6'} component={'span'} gutterBottom>
+                {inProcessTodo && inProcessTodo.title}
+            </Typography>
             <Typography variant={'h3'} component={'span'}>
                 {time}
             </Typography>

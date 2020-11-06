@@ -10,6 +10,6 @@ export const useStyles = makeStyles((theme) => ({
     iconButton: {
         color: '#fff',
         marginLeft: 'auto',
-        marginRight: -8,
+        marginRight: -16,
     },
 }));

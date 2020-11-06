@@ -57,6 +57,15 @@ const listReducer = (state = [], action) => {
             });
         case types.DELETE_TODO:
             return state.filter((item) => item.id !== action.payload.id);
+        case types.TIMESHEET_STATUS:
+            return state.map((item) => {
+                if (item.id === action.payload.id) {
+                    item.timesheet.status = !item.timesheet.status;
+                    return item;
+                } else {
+                    return item;
+                }
+            });
         default:
             return state;
     }

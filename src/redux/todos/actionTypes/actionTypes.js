@@ -19,3 +19,5 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const SET_CURRENT_TODO = 'SET_CURRENT_TODO';
 
 export const FILTER_TODO = 'FILTER_TODO';
+
+export const TIMESHEET_STATUS = 'TIMESHEET_STATUS';

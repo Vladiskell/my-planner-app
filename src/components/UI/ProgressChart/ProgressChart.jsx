@@ -1,11 +1,10 @@
 import React from 'react';
 import { useStyles } from './styles';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { todoListGet } from '../../../redux/todos/selectors/selectors';
 
 import { PieChart, Pie, Cell } from 'recharts';
-import { todoListGet } from '../../../redux/todos/selectors/selectors';
-import { mocksTodos } from '../../../__mocks__/todos';
-
 // ---------------------------------------------------------------------------------------------------------------------
 // component
 const ProgressChart = () => {
@@ -31,7 +30,7 @@ const ProgressChart = () => {
             <PieChart width={250} height={250}>
                 <Pie data={data} cx={124} cy={126} innerRadius={75} outerRadius={90} paddingAngle={3} label>
                     {data.map((entry, index) => (
-                        <Cell fill={COLORS[index % COLORS.length]} />
+                        <Cell fill={COLORS[index % COLORS.length]} key={entry.value} />
                     ))}
                 </Pie>
             </PieChart>

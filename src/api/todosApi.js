@@ -1,18 +1,13 @@
 import { firestore } from '../firebase/firebase.config';
 
 const todoListRef = (category) => firestore.collection('todos').doc(category).collection('items');
+const reportListRef = (category) => firestore.collection('todos').doc(category).collection('report');
 
 // get todo list from database
 export const getTodoList = async (category) => {
     const data = await todoListRef(category).get();
 
     return data.docs.map((doc) => doc.data());
-};
-
-export const getTodo = async (category, id) => {
-    const data = await todoListRef(category).doc(id).get();
-
-    return data.data();
 };
 
 // post new todo item in database
@@ -26,7 +21,10 @@ export const postTodo = (category, title) => {
                 important: false,
                 process: false,
             },
-            timesheet: '',
+            timesheet: {
+                status: false,
+                timeStart: new Date(),
+            },
             subItems: [],
         })
         .then(async function (docRef) {
@@ -66,6 +64,11 @@ export const updateTodo = async (category, id, updateType, value) => {
                     'statuses.completed': false,
                     'statuses.process': value,
                 };
+            case 'timer': {
+                return {
+                    'timesheet.status': value,
+                };
+            }
         }
     };
 
@@ -75,3 +78,25 @@ export const updateTodo = async (category, id, updateType, value) => {
 
 // delete todo item from database
 export const deleteTodo = (category, id) => todoListRef(category).doc(id).delete();
+
+// get todo list from database
+export const getReportList = async (category) => {
+    const data = await reportListRef(category).get();
+
+    return data.docs.map((doc) => doc.data());
+};
+
+// post report todo in database
+export const postReport = (category, title, id, status) => {
+    return reportListRef(category)
+        .add({
+            id,
+            title,
+            status,
+            date: Date.now(),
+        })
+        .then(async (docRef) => {
+            const data = await docRef.get();
+            return data.data();
+        });
+};

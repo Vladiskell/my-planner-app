@@ -5,24 +5,24 @@ import { Typography } from '@material-ui/core';
 
 import Block from '../../Layouts/Block/Block';
 
-// -------------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------------------------------
 // component
-const Date = () => {
+const PlannerDate = () => {
     const classes = useStyles();
 
     return (
         <Block isHeader={false} centerBody>
             <Typography className={classes.day} variant={'h4'}>
-                Saturday,
+                Friday,
             </Typography>
             <Typography className={classes.date} variant={'h6'}>
-                24 October, 2020
+                30 October, 2020
             </Typography>
             <Typography className={classes.time} variant={'h3'}>
-                14:15
+                {15}:{20}
             </Typography>
         </Block>
     );
 };
 
-export default Date;
+export default PlannerDate;

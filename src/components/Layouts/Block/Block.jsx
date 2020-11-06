@@ -11,7 +11,7 @@ const Block = ({ isHeader = true, title, children, headerChildren, centerBody = 
     const classes = useStyles();
 
     return (
-        <Paper className={classes.block} elevation={2}>
+        <Paper className={classes.block} elevation={3}>
             {isHeader && (
                 <div className={classes.header}>
                     <Typography variant={'body1'}>{title}</Typography>

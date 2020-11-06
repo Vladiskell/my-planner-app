@@ -6,14 +6,17 @@ export const useStyles = makeStyles((theme) => ({
     },
     header: {
         ...theme.headerStyles,
-        // textTransform: 'capitalize',
     },
     body: {
         padding: '16px 24px',
+        maxHeight: 'calc(100% - 66px)',
+        overflowX: 'hidden',
+        overflowY: 'auto',
     },
     withoutHeader: {
         padding: '24px !important',
         height: '100%',
+        maxHeight: '100% !important',
     },
     centerBody: {
         display: 'flex',

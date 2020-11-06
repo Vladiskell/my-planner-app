@@ -3,8 +3,8 @@ import { useStyles } from './styles';
 
 // ---------------------------------------------------------------------------------------------------------------------
 // component
-const Badge = ({ title, color = 'primary' }) => {
-    const classes = useStyles({ color });
+const Badge = ({ title }) => {
+    const classes = useStyles({ title });
 
     return (
         <div className={classes.badge}>

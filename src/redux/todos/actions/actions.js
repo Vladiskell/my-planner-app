@@ -55,3 +55,9 @@ export const todoFilter = (filter) => ({
     type: types.FILTER_TODO,
     payload: filter,
 });
+
+// timer
+export const setTimesheetStatus = (id) => ({
+    type: types.TIMESHEET_STATUS,
+    payload: { id },
+});

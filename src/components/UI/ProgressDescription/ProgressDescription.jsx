@@ -37,7 +37,7 @@ const ProgressDescription = () => {
             <div className={classes.lines}>
                 <Typography variant={'h6'}>Total: {todoList.length} todos</Typography>
                 {lines.map((item) => (
-                    <div className={classes.line}>
+                    <div className={classes.line} key={item.text}>
                         <div className={classes.circle} style={{ backgroundColor: item.color }}></div>
                         <Typography variant={'body2'}>{item.text}</Typography>
                     </div>

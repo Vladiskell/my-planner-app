@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         borderRadius: theme.spacing(0.5),
-        padding: '8px 4px 8px 4px !important',
+        padding: '6px 4px 6px 4px !important',
         borderBottom: '1px solid rgba(0, 0, 0, 0.1) !important',
     },
     completed: {
