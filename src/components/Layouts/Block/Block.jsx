@@ -5,8 +5,7 @@ import classnames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
 
-// -------------------------------------------------------------------------------------------------
-// component
+// ---------------------------------------------------------------------------------------------------------------------
 const Block = ({ isHeader = true, title, children, headerChildren, centerBody = false }) => {
     const classes = useStyles();
 

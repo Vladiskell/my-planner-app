@@ -8,8 +8,7 @@ import { EducationPage } from '../Pages/EducationPage/EducationPage';
 import { ReviewPage } from '../Pages/ReviewPage/ReviewPage';
 import { NotesPage } from '../Pages/NotesPage/NotesPage';
 
-// -------------------------------------------------------------------------------------------------
-// component
+// ---------------------------------------------------------------------------------------------------------------------
 const App = () => {
     const classes = useStyles();
 

@@ -2,35 +2,36 @@ import React, { useMemo } from 'react';
 import { useStyles } from './styles';
 import { useSelector } from 'react-redux';
 
-import { todoListGet } from '../../../redux/todos/selectors/selectors';
+import { getTodosSelector } from '../../../redux/todos/selectors';
 
 import { Typography } from '@material-ui/core';
-import { mocksTodos } from '../../../__mocks__/todos';
 
-// -------------------------------------------------------------------------------------------------
-// component
+// ---------------------------------------------------------------------------------------------------------------------
 const ProgressDescription = () => {
     const classes = useStyles();
-    const todoList = useSelector(todoListGet);
+    const todoList = useSelector(getTodosSelector);
 
-    const lines = useMemo(() => [
-        {
-            text: 'In process',
-            color: '#ff9800',
-        },
-        {
-            text: 'Important',
-            color: '#f45b68',
-        },
-        {
-            text: 'Completed',
-            color: '#1976d2',
-        },
-        {
-            text: 'Other',
-            color: '#4caf50',
-        },
-    ]);
+    const lines = useMemo(
+        () => [
+            {
+                text: 'In process',
+                color: '#ff9800',
+            },
+            {
+                text: 'Important',
+                color: '#f45b68',
+            },
+            {
+                text: 'Completed',
+                color: '#1976d2',
+            },
+            {
+                text: 'Other',
+                color: '#4caf50',
+            },
+        ],
+        []
+    );
 
     return (
         <div className={classes.progressDescription}>

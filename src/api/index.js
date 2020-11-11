@@ -1,18 +1,18 @@
 import { firestore } from '../firebase/firebase.config';
 
-const todoListRef = (category) => firestore.collection('todos').doc(category).collection('items');
-const reportListRef = (category) => firestore.collection('todos').doc(category).collection('report');
+const todosRef = (category) => firestore.collection('todos').doc(category).collection('items');
+const reportsRef = (category) => firestore.collection('todos').doc(category).collection('report');
 
 // get todo list from database
-export const getTodoList = async (category) => {
-    const data = await todoListRef(category).get();
+export const getTodos = async (category) => {
+    const data = await todosRef(category).get();
 
     return data.docs.map((doc) => doc.data());
 };
 
 // post new todo item in database
 export const postTodo = (category, title) => {
-    return todoListRef(category)
+    return todosRef(category)
         .add({
             title,
             description: '',
@@ -22,13 +22,12 @@ export const postTodo = (category, title) => {
                 process: false,
             },
             timesheet: {
-                status: false,
-                timeStart: new Date(),
+                time: 0,
             },
             subItems: [],
         })
         .then(async function (docRef) {
-            await todoListRef(category).doc(docRef.id).update({
+            await todosRef(category).doc(docRef.id).update({
                 id: docRef.id,
             });
             const data = await docRef.get();
@@ -64,31 +63,34 @@ export const updateTodo = async (category, id, updateType, value) => {
                     'statuses.completed': false,
                     'statuses.process': value,
                 };
-            case 'timer': {
-                return {
-                    'timesheet.status': value,
-                };
-            }
         }
     };
 
-    const todo = await todoListRef(category).doc(id);
+    const todo = await todosRef(category).doc(id);
     todo.update(updatesValue());
 };
 
+// post todo item timesheet
+export const postTimesheet = async (category, id, time) => {
+    const todo = await todosRef(category).doc(id);
+    todo.update({
+        'timesheet.time': time,
+    });
+};
+
 // delete todo item from database
-export const deleteTodo = (category, id) => todoListRef(category).doc(id).delete();
+export const deleteTodo = (category, id) => todosRef(category).doc(id).delete();
 
 // get todo list from database
-export const getReportList = async (category) => {
-    const data = await reportListRef(category).get();
+export const getReports = async (category) => {
+    const data = await reportsRef(category).get();
 
     return data.docs.map((doc) => doc.data());
 };
 
-// post report todo in database
+// post reports todo in database
 export const postReport = (category, title, id, status) => {
-    return reportListRef(category)
+    return reportsRef(category)
         .add({
             id,
             title,
@@ -99,4 +101,14 @@ export const postReport = (category, title, id, status) => {
             const data = await docRef.get();
             return data.data();
         });
+};
+
+// delete reports todo in database
+export const deleteReport = async (category, id) => {
+    const data = await reportsRef(category).get();
+    const item = async () => data.docs.find((doc) => id === doc.data().id);
+
+    item().then((docRef) => {
+        reportsRef(category).doc(docRef.id).delete();
+    });
 };

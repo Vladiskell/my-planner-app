@@ -11,8 +11,7 @@ import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
 import { theme } from './theme/theme';
 
-// -------------------------------------------------------------------------------------------------
-// App
+// ---------------------------------------------------------------------------------------------------------------------
 const app = (
     <Provider store={store}>
         <BrowserRouter>

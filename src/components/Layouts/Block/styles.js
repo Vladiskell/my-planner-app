@@ -2,6 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     block: {
+        display: 'flex',
+        flexDirection: 'column',
         height: '100%',
     },
     header: {
@@ -9,9 +11,9 @@ export const useStyles = makeStyles((theme) => ({
     },
     body: {
         padding: '16px 24px',
-        maxHeight: 'calc(100% - 66px)',
         overflowX: 'hidden',
         overflowY: 'auto',
+        flexGrow: 1,
     },
     withoutHeader: {
         padding: '24px !important',

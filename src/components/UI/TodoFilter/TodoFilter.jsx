@@ -1,28 +1,19 @@
 import React, { useMemo, useState } from 'react';
 import { useStyles } from './styles';
-import { useDispatch, connect } from 'react-redux';
-
-import { todoFilter } from '../../../redux/todos/actions/actions';
 
 import Button from '@material-ui/core/Button';
 
 // ---------------------------------------------------------------------------------------------------------------------
-// component
-const TodoFilter = () => {
+const TodoFilter = ({ changeFilter }) => {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const [active, setActive] = useState(0);
 
-    const handleClick = (e) => {
-        setActive(Number(e.currentTarget.dataset.index));
-    };
-
-    const buttons = useMemo(() => ['All', 'Completed', 'Uncompleted', 'Important']);
+    const buttons = useMemo(() => ['All', 'Completed', 'Uncompleted', 'Important'], []);
 
     const onButtonClick = (e) => {
         const { name } = e.currentTarget;
-        handleClick(e);
-        dispatch(todoFilter(name));
+        setActive(Number(e.currentTarget.dataset.index));
+        changeFilter(name);
     };
 
     return (

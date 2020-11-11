@@ -8,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import SaveIcon from '@material-ui/icons/Save';
 
 // ---------------------------------------------------------------------------------------------------------------------
-// component
 const TodoEditForm = ({ title, onChange, onEditTitle }) => {
     const classes = useStyles();
     const [focused, setFocused] = useState(false);

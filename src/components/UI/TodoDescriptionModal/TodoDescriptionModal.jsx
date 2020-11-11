@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './styles';
 
-import * as API from '../../../api/todosApi';
-import { modalsGet } from '../../../redux/modals/selectors/selectors';
-import { modalsCloseAction } from '../../../redux/modals/actions/actions';
-import { currentTodoGet, todoCategoryGet } from '../../../redux/todos/selectors/selectors';
+import { getModalsSelector } from '../../../redux/modals/selectors';
+import { closeModalsAction } from '../../../redux/modals/actions';
+import { getCurrentTodoSelector } from '../../../redux/todos/selectors';
+import { postTodoDescriptionAction } from '../../../redux/todos/actions';
+import { getCategorySelector } from '../../../redux/category/selectors';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,16 +14,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { editTodoDescriptionAction } from '../../../redux/todos/actions/actions';
 
-// -------------------------------------------------------------------------------------------------
-// component
+// ---------------------------------------------------------------------------------------------------------------------
 const TodoDescriptionModal = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const category = useSelector(todoCategoryGet);
-    const modals = useSelector(modalsGet);
-    const currentTodo = useSelector(currentTodoGet);
+
+    const modals = useSelector(getModalsSelector);
+    const currentCategory = useSelector(getCategorySelector);
+    const currentTodo = useSelector(getCurrentTodoSelector);
 
     const [value, setValue] = useState('');
 
@@ -32,15 +32,11 @@ const TodoDescriptionModal = () => {
         }
     }, [currentTodo]);
 
-    const onClose = () => dispatch(modalsCloseAction());
+    const onClose = () => dispatch(closeModalsAction());
 
     const onChange = (event) => setValue(event.target.value);
 
-    const onSubmit = async () => {
-        await API.updateTodo(category, currentTodo.id, 'description', value);
-        dispatch(editTodoDescriptionAction(currentTodo.id, value));
-        dispatch(modalsCloseAction());
-    };
+    const onSubmit = () => dispatch(postTodoDescriptionAction(currentCategory, currentTodo.id, value));
 
     return (
         <div className={classes.root}>

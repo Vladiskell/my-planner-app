@@ -1,42 +1,42 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as API from '../../../api/todosApi';
-import { todoCategoryGet } from '../../../redux/todos/selectors/selectors';
-import { setReportListAction } from '../../../redux/report/actions/actions';
-import { reportTodoListGet } from '../../../redux/report/selectors/selectors';
+import { getReportAction } from '../../../redux/reports/actions';
+import { getReportsSelector } from '../../../redux/reports/selectors';
+import { getCategorySelector } from '../../../redux/category/selectors';
 
-import { Typography } from '@material-ui/core';
+import { IconButton, Typography } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import Badge from '../../UI/Badge/Badge';
 import Block from '../../Layouts/Block/Block';
+import { uuid } from 'uuidv4';
 
 // ---------------------------------------------------------------------------------------------------------------------
-// component
 const Report = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const currentCategory = useSelector(todoCategoryGet);
-    const reportList = useSelector(reportTodoListGet);
 
-    useEffect(() => {
-        API.getReportList(currentCategory).then((data) => {
-            dispatch(setReportListAction(data));
-        });
-    }, [currentCategory]);
+    const currentCategory = useSelector(getCategorySelector);
+    const reports = useSelector(getReportsSelector);
+
+    const onDelete = (id) => dispatch(getReportAction(id, currentCategory));
 
     return (
         <Block title={'Report'}>
             <div className={classes.inner}>
-                {reportList &&
-                    reportList.map((item) => {
+                {reports &&
+                    reports.map((item) => {
                         const date = new Date(item.date);
 
                         return (
-                            <Typography className={classes.reportItem}>
+                            <Typography className={classes.reportItem} key={uuid()}>
                                 - Todo <span>'{item.title}'</span> was <Badge title={item.status} /> in{' '}
                                 {date.toUTCString()}
+                                <IconButton className={classes.button} onClick={() => onDelete(item.id)}>
+                                    <DeleteIcon fontSize="small" />
+                                </IconButton>
                             </Typography>
                         );
                     })}

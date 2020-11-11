@@ -20,7 +20,7 @@ export const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(1),
         },
 
-        '& > span': {
+        '& > h6': {
             marginLeft: theme.spacing(1.5),
             lineHeight: '1 !important',
         },
@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
         margin: '16px 24px 3px 24px',
         paddingBottom: '8px',
 
-        '& span': {
+        '& p': {
             fontSize: '14px !important',
             lineHeight: '1.75',
             letterSpacing: '0.02857em',

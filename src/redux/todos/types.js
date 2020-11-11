@@ -1,0 +1,25 @@
+export const GET_TODOS = 'GET_TODOS';
+
+export const SET_TODOS = 'SET_TODOS';
+
+export const POST_TODO = 'POST_TODO';
+
+export const ADD_TODO = 'ADD_TODO';
+
+export const SET_TODO_COMPLETED = 'SET_TODO_COMPLETED';
+
+export const SET_TODO_IMPORTANT = 'SET_TODO_IMPORTANT';
+
+export const SET_TODO_PROCESS = 'SET_TODO_PROCESS';
+
+export const SET_CURRENT_TODO = 'SET_CURRENT_TODO';
+
+export const EDIT_TODO_TITLE = 'EDIT_TODO_TITLE';
+
+export const EDIT_TODO_DESCRIPTION = 'SET_TODO_DESCRIPTION';
+
+export const DELETE_TODO = 'DELETE_TODO';
+
+export const POST_TODO_DESCRIPTION = 'POST_TODO_DESCRIPTION';
+
+export const POST_TODO_TITLE = 'POST_TODO_TITLE';

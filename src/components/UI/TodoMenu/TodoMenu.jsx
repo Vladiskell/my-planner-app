@@ -1,6 +1,9 @@
 import React, { useMemo, useState } from 'react';
 import { useStyles } from './styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+
+import { openModalsAction } from '../../../redux/modals/actions';
+import { setCurrentTodoAction } from '../../../redux/todos/actions';
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -14,9 +17,8 @@ import PriorityHighIcon from '@material-ui/icons/PriorityHigh';
 import SpellcheckIcon from '@material-ui/icons/Spellcheck';
 import Switch from '@material-ui/core/Switch';
 import BuildOutlinedIcon from '@material-ui/icons/BuildOutlined';
-import { modalsOpenAction } from '../../../redux/modals/actions/actions';
-import { setCurrentTodoAction, setTodoIsImportantAction } from '../../../redux/todos/actions/actions';
 
+// ---------------------------------------------------------------------------------------------------------------------
 const TodoMenu = (props) => {
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -49,7 +51,7 @@ const TodoMenu = (props) => {
                 icon: <BuildOutlinedIcon className={classes.menuIcon} />,
                 function: () => {
                     dispatch(setCurrentTodoAction(props.id));
-                    dispatch(modalsOpenAction());
+                    dispatch(openModalsAction());
                 },
             },
             {

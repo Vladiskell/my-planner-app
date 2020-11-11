@@ -3,17 +3,18 @@ import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
 
-import * as API from '../../../api/todosApi';
+import * as API from '../../../api';
 import {
     deleteTodoAction,
     setCurrentTodoAction,
-    setTodoIsCompletedAction,
-    setTodoIsImportantAction,
-    setTodoIsProcessAction,
+    setTodoCompletedAction,
+    setTodoImportantAction,
+    setTodoProcessAction,
     editTodoTitleAction,
-    setTimesheetStatus,
-} from '../../../redux/todos/actions/actions';
-import { currentTodoGet, todoCategoryGet } from '../../../redux/todos/selectors/selectors';
+    postTodoTitle,
+} from '../../../redux/todos/actions';
+import { addReportAction } from '../../../redux/reports/actions';
+import { getCategorySelector } from '../../../redux/category/selectors';
 
 import { Typography } from '@material-ui/core';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -22,14 +23,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Badge from '../Badge/Badge';
 import TodoEditForm from '../TodoEditForm/TodoEditForm';
 import TodoMenu from '../TodoMenu/TodoMenu';
-import { reportAddAction } from '../../../redux/report/actions/actions';
 
-// -------------------------------------------------------------------------------------------------
-// component
+// ---------------------------------------------------------------------------------------------------------------------
 const TodoItem = ({ props }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const currentCategory = useSelector(todoCategoryGet);
+    const currentCategory = useSelector(getCategorySelector);
 
     const [title, setTitle] = useState(props.title);
     const [isEdit, setIsEdit] = useState(false);
@@ -38,18 +37,10 @@ const TodoItem = ({ props }) => {
 
     const onEdit = () => setIsEdit(true);
 
-    const setCurrentTodo = () => {
-        dispatch(setCurrentTodoAction(props.id));
-    };
+    const setCurrentTodo = () => dispatch(setCurrentTodoAction(props.id));
 
-    const onEditTitle = async () => {
-        await API.updateTodo(currentCategory, props.id, 'title', title);
-
-        API.postReport(currentCategory, title, props.id, 'Changed').then((report) => {
-            dispatch(reportAddAction(report));
-        });
-
-        dispatch(editTodoTitleAction(props.id, title));
+    const onEditTitle = () => {
+        dispatch(postTodoTitle(currentCategory, props.id, title));
         setIsEdit(false);
     };
 
@@ -60,11 +51,11 @@ const TodoItem = ({ props }) => {
 
         if (value) {
             await API.postReport(currentCategory, title, props.id, 'Completed').then((report) => {
-                dispatch(reportAddAction(report));
+                dispatch(addReportAction(report));
             });
         }
 
-        dispatch(setTodoIsCompletedAction(props.id));
+        dispatch(setTodoCompletedAction(props.id));
     };
 
     const onImportant = async () => {
@@ -74,33 +65,30 @@ const TodoItem = ({ props }) => {
 
         if (value) {
             await API.postReport(currentCategory, title, props.id, 'Important').then((report) => {
-                dispatch(reportAddAction(report));
+                dispatch(addReportAction(report));
             });
         }
 
-        dispatch(setTodoIsImportantAction(props.id));
+        dispatch(setTodoImportantAction(props.id));
     };
 
     const onProcess = async () => {
         const value = !props.statuses.process;
 
         await API.updateTodo(currentCategory, props.id, 'process', value);
-        // await API.updateTodo(currentCategory, props.id, 'timer', value);
 
-        if (value) {
-            await API.postReport(currentCategory, title, props.id, 'In process').then((report) => {
-                dispatch(reportAddAction(report));
-            });
-        }
+        value &&
+            (await API.postReport(currentCategory, title, props.id, 'In process').then((report) => {
+                dispatch(addReportAction(report));
+            }));
 
-        dispatch(setTodoIsProcessAction(props.id));
-        dispatch(setTimesheetStatus(props.id));
+        dispatch(setTodoProcessAction(props.id));
     };
 
     const onDelete = async () => {
         await API.deleteTodo(currentCategory, props.id);
         await API.postReport(currentCategory, title, props.id, 'Deleted').then((report) => {
-            dispatch(reportAddAction(report));
+            dispatch(addReportAction(report));
         });
         dispatch(deleteTodoAction(props.id));
     };
@@ -122,8 +110,8 @@ const TodoItem = ({ props }) => {
                     </Typography>
 
                     <div className={classes.badges}>
-                        {props.statuses.process && <Badge title={'In process'} color={'warning'} />}
-                        {props.statuses.important && <Badge title={'Important'} color={'secondary'} />}
+                        {props.statuses.process && <Badge title="In process" color="warning" />}
+                        {props.statuses.important && <Badge title="Important" color="secondary" />}
                     </div>
 
                     <TodoMenu
