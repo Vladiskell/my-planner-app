@@ -10,7 +10,7 @@ import CastForEducationIcon from '@material-ui/icons/CastForEducation';
 import SpeakerNotesIcon from '@material-ui/icons/SpeakerNotes';
 import RateReviewIcon from '@material-ui/icons/RateReview';
 
-import { setCategoryAction } from '../../../redux/category/actions';
+import { SET_CATEGORY, setCategoryAction } from '../../../redux/category/actions';
 
 // ---------------------------------------------------------------------------------------------------------------------
 const SideBar = () => {
@@ -63,7 +63,7 @@ const SideBar = () => {
                             exact
                             to={item.path}
                             activeClassName={classes.activePage}
-                            onClick={() => dispatch(setCategoryAction(item.id))}
+                            onClick={() => dispatch(SET_CATEGORY.TRIGGER({ category: item.id }))}
                         >
                             <Typography component="span">{item.text}</Typography>
                             {item.icon}

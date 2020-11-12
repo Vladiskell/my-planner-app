@@ -35,7 +35,7 @@
       <option name="ARRAY_INITIALIZER_LBRACE_ON_NEXT_LINE" value="true" />
       <option name="ARRAY_INITIALIZER_RBRACE_ON_NEXT_LINE" value="true" />
       <option name="WRAP_ON_TYPING" value="1" />
-      <option name="SOFT_MARGINS" value="80" />
+      <option name="SOFT_MARGINS" value="120" />
       <indentOptions>
         <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="2" />

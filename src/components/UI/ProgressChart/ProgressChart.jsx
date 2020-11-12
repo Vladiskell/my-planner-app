@@ -10,8 +10,6 @@ const ProgressChart = () => {
     const classes = useStyles();
     const todos = useSelector(getTodosSelector);
 
-    console.log('-----', 'chart');
-
     const processTodos = todos.filter((item) => item.statuses.process).length;
     const importantTodos = todos.filter((item) => item.statuses.important).length;
     const completedTodos = todos.filter((item) => item.statuses.completed).length;

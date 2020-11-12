@@ -1,20 +1,16 @@
 import { put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import * as API from '../../api';
-
-import { SET_CATEGORY } from '../category/types';
-import { GET_REPORT } from './types';
-
-import { setReportsAction, deleteReportAction } from './actions';
+import { GET_REPORTS, SET_REPORTS, DELETE_REPORT } from './actions';
 
 function* getReports(action) {
     try {
         const { category } = action.payload;
 
         const data = yield API.getReports(category);
-        yield put(setReportsAction(data));
+        yield put(SET_REPORTS.SUCCESS({ reports: data }));
     } catch {
-        yield put(setReportsAction([]));
+        yield put(SET_REPORTS.ERROR());
     }
 }
 
@@ -23,18 +19,18 @@ function* deleteReport(action) {
         const { category, id } = action.payload;
 
         yield API.deleteReport(category, id);
-        yield put(deleteReportAction(id));
+        yield put(DELETE_REPORT.SUCCESS({ id }));
     } catch (e) {
-        console.log('--', 'error');
+        yield put(DELETE_REPORT.ERROR());
     }
 }
 
 function* watchGetReports() {
-    yield takeEvery(SET_CATEGORY, getReports);
+    yield takeEvery(GET_REPORTS.TRIGGER.type, getReports);
 }
 
 function* watchDeleteReport() {
-    yield takeEvery(GET_REPORT, deleteReport);
+    yield takeEvery(DELETE_REPORT.TRIGGER.type, deleteReport);
 }
 
 export default function* watchReports() {

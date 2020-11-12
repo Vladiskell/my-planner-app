@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getReportAction } from '../../../redux/reports/actions';
+import { DELETE_REPORT, GET_REPORTS } from '../../../redux/reports/actions';
 import { getReportsSelector } from '../../../redux/reports/selectors';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
@@ -18,10 +18,14 @@ const Report = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const currentCategory = useSelector(getCategorySelector);
+    const category = useSelector(getCategorySelector);
     const reports = useSelector(getReportsSelector);
 
-    const onDelete = (id) => dispatch(getReportAction(id, currentCategory));
+    useEffect(() => {
+        dispatch(GET_REPORTS.TRIGGER({ category }));
+    }, [category]);
+
+    const onDelete = (id) => dispatch(DELETE_REPORT.TRIGGER({ category, id }));
 
     return (
         <Block title={'Report'}>

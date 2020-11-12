@@ -13,7 +13,7 @@ import {
     editTodoTitleAction,
     postTodoTitle,
 } from '../../../redux/todos/actions';
-import { addReportAction } from '../../../redux/reports/actions';
+import { ADD_REPORT } from '../../../redux/reports/actions';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
 import { Typography } from '@material-ui/core';
@@ -51,7 +51,7 @@ const TodoItem = ({ props }) => {
 
         if (value) {
             await API.postReport(currentCategory, title, props.id, 'Completed').then((report) => {
-                dispatch(addReportAction(report));
+                dispatch(ADD_REPORT.SUCCESS({ report }));
             });
         }
 
@@ -65,7 +65,7 @@ const TodoItem = ({ props }) => {
 
         if (value) {
             await API.postReport(currentCategory, title, props.id, 'Important').then((report) => {
-                dispatch(addReportAction(report));
+                dispatch(ADD_REPORT.SUCCESS({ report }));
             });
         }
 
@@ -79,7 +79,7 @@ const TodoItem = ({ props }) => {
 
         value &&
             (await API.postReport(currentCategory, title, props.id, 'In process').then((report) => {
-                dispatch(addReportAction(report));
+                dispatch(ADD_REPORT.SUCCESS({ report }));
             }));
 
         dispatch(setTodoProcessAction(props.id));
@@ -88,7 +88,7 @@ const TodoItem = ({ props }) => {
     const onDelete = async () => {
         await API.deleteTodo(currentCategory, props.id);
         await API.postReport(currentCategory, title, props.id, 'Deleted').then((report) => {
-            dispatch(addReportAction(report));
+            dispatch(ADD_REPORT.SUCCESS({ report }));
         });
         dispatch(deleteTodoAction(props.id));
     };

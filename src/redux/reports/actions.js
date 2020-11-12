@@ -1,21 +1,10 @@
-import * as types from './types';
+import actionFabric from '../../utils/actionFabric';
 
-export const setReportsAction = (reports) => ({
-    type: types.SET_REPORTS,
-    payload: { reports },
-});
+//----------------------------------------------------------------------------------------------------------------------
+export const GET_REPORTS = actionFabric('GET_REPORTS');
 
-export const getReportAction = (id, category) => ({
-    type: types.GET_REPORT,
-    payload: { id, category },
-});
+export const SET_REPORTS = actionFabric('SET_REPORTS');
 
-export const addReportAction = (report) => ({
-    type: types.ADD_REPORT,
-    payload: { report },
-});
+export const ADD_REPORT = actionFabric('ADD_REPORT');
 
-export const deleteReportAction = (id) => ({
-    type: types.DELETE_REPORT,
-    payload: { id },
-});
+export const DELETE_REPORT = actionFabric('DELETE_REPORT');

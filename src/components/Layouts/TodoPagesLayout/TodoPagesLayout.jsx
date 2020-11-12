@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-import { setCategoryAction } from '../../../redux/category/actions';
+import { SET_CATEGORY, setCategoryAction } from '../../../redux/category/actions';
 
 import Todo from '../../Parts/Todo/Todo';
 import Description from '../../Parts/Description/Description';
@@ -21,9 +21,9 @@ export const TodoPagesLayout = () => {
 
     useEffect(() => {
         if (url.length === 1) {
-            dispatch(setCategoryAction('coding'));
+            dispatch(SET_CATEGORY.TRIGGER({ category: 'coding' }));
         } else {
-            dispatch(setCategoryAction(url.slice(1)));
+            dispatch(SET_CATEGORY.TRIGGER({ category: url.slice(1) }));
         }
     }, [url, dispatch]);
 

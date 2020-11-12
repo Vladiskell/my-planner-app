@@ -1,7 +1,7 @@
 import { put, takeEvery, all, fork } from 'redux-saga/effects';
 
 import * as API from '../../api';
-import { addReportAction } from '../reports/actions';
+import { ADD_REPORT, addReportAction } from '../reports/actions';
 import { addTodoAction, editTodoDescriptionAction, editTodoTitleAction, setTodosAction } from './actions';
 import { GET_TODOS, POST_TODO, POST_TODO_DESCRIPTION, POST_TODO_TITLE } from './types';
 import { closeModalsAction } from '../modals/actions';
@@ -24,10 +24,10 @@ function* postTodo(action) {
         const { category, value } = action.payload;
 
         const todoData = yield API.postTodo(category, value).then();
-        const reportData = yield API.postReport(category, value, todoData.id, 'Added').then();
+        const report = yield API.postReport(category, value, todoData.id, 'Added').then();
 
         yield put(addTodoAction(todoData));
-        yield put(addReportAction(reportData));
+        yield put(ADD_REPORT.SUCCESS({ report }));
     } catch {
         console.log('-----', 'error');
     }
@@ -50,10 +50,10 @@ function* postTodoTitle(action) {
         const { category, id, title } = action.payload;
 
         yield API.updateTodo(category, id, 'title', title);
-        const reportData = yield API.postReport(category, title, id, 'Changed').then();
+        const report = yield API.postReport(category, title, id, 'Changed').then();
 
         yield put(editTodoTitleAction(id, title));
-        yield put(addReportAction(reportData));
+        yield put(ADD_REPORT.SUCCESS({ report }));
     } catch {
         console.log('-----', 'error');
     }

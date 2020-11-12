@@ -1,15 +1,8 @@
-import * as types from './types';
+import { createReducer } from '@reduxjs/toolkit';
+import { SET_CATEGORY, setCategoryAction } from './actions';
 
-const initialState = 'coding';
+export const categoryReducer = createReducer('', {
+    [SET_CATEGORY.TRIGGER]: (state, action) => action.payload.category,
+});
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case types.SET_CATEGORY: {
-            return action.payload.category;
-        }
-        default:
-            return state;
-    }
-};
-
-export default reducer;
+export default categoryReducer;

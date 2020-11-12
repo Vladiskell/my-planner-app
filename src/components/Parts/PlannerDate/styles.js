@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     day: {
-        color: theme.palette.secondary.main,
+        // color: theme.palette.secondary.main,
     },
 
     date: {
@@ -11,5 +11,11 @@ export const useStyles = makeStyles((theme) => ({
 
     time: {
         color: theme.palette.primary.main,
+    },
+
+    box: {
+        '& > button': {
+            margin: 16,
+        },
     },
 }));

@@ -1,18 +1,10 @@
-import * as types from './types';
+import { createReducer } from '@reduxjs/toolkit';
+import { ADD_REPORT, DELETE_REPORT, SET_REPORTS } from './actions';
 
-const initialState = [];
+const reportReducer = createReducer([], {
+    [SET_REPORTS.SUCCESS]: (state, action) => [...action.payload.reports].sort((a, b) => (a.date > b.date ? 1 : -1)),
+    [ADD_REPORT.SUCCESS]: (state, action) => [...state, action.payload.report],
+    [DELETE_REPORT.SUCCESS]: (state, action) => state.filter((item) => item.id !== action.payload.id),
+});
 
-const reducer = (state = initialState, action) => {
-    switch (action.type) {
-        case types.SET_REPORTS:
-            return [...action.payload.reports].sort((a, b) => (a.date > b.date ? 1 : -1));
-        case types.ADD_REPORT:
-            return [...state, action.payload.report];
-        case types.DELETE_REPORT:
-            return state.filter((item) => item.id !== action.payload.id);
-        default:
-            return state;
-    }
-};
-
-export default reducer;
+export default reportReducer;

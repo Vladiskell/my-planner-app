@@ -1,6 +1,3 @@
-import * as types from './types';
+import actionFabric from '../../utils/actionFabric';
 
-export const setCategoryAction = (category) => ({
-    type: types.SET_CATEGORY,
-    payload: { category },
-});
+export const SET_CATEGORY = actionFabric('SET_CATEGORY');
