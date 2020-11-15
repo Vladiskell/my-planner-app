@@ -47,23 +47,24 @@ const Timer = () => {
 
     return (
         <Block isHeader={false} centerBody>
-            <Typography variant={'h6'} component={'span'} gutterBottom>
-                {inProcessTodo && inProcessTodo.title}
-            </Typography>
-            <Typography variant={'h3'} component={'span'}>
-                {time}
-            </Typography>
-            <div className={classes.controls}>
-                <Button variant={'contained'} onClick={onReset}>
-                    Reset
-                </Button>
-                <Button variant={'contained'} color={'primary'} onClick={onStart}>
-                    Start
-                </Button>
-                <Button variant={'contained'} color={'secondary'} onClick={onPause}>
-                    Pause
-                </Button>
-            </div>
+            <Typography variant={'h4'}>Some block</Typography>
+            {/*<Typography variant={'h6'} component={'span'} gutterBottom>*/}
+            {/*    {inProcessTodo && inProcessTodo.title}*/}
+            {/*</Typography>*/}
+            {/*<Typography variant={'h3'} component={'span'}>*/}
+            {/*    {time}*/}
+            {/*</Typography>*/}
+            {/*<div className={classes.controls}>*/}
+            {/*    <Button variant={'contained'} onClick={onReset}>*/}
+            {/*        Reset*/}
+            {/*    </Button>*/}
+            {/*    <Button variant={'contained'} color={'primary'} onClick={onStart}>*/}
+            {/*        Start*/}
+            {/*    </Button>*/}
+            {/*    <Button variant={'contained'} color={'secondary'} onClick={onPause}>*/}
+            {/*        Pause*/}
+            {/*    </Button>*/}
+            {/*</div>*/}
         </Block>
     );
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { useStyles } from './styles';
 
 import Block from '../../Layouts/Block/Block';
+import { Typography } from "@material-ui/core";
 
 // ---------------------------------------------------------------------------------------------------------------------
 const PlannerDate = () => {
@@ -9,6 +10,8 @@ const PlannerDate = () => {
 
     return (
         <Block isHeader={false} centerBody>
+            <Typography variant={'h4'}>Some block</Typography>
+
             {/*<Typography className={classes.day} variant={'h4'}>*/}
             {/*    Friday,*/}
             {/*</Typography>*/}
