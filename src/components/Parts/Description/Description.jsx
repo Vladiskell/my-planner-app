@@ -3,7 +3,7 @@ import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getCurrentTodoSelector } from '../../../redux/todos/selectors';
-import { openModalsAction } from '../../../redux/modals/actions';
+import { OPEN_MODALS, openModalsAction } from '../../../redux/modals/actions';
 
 import { Typography, IconButton } from '@material-ui/core';
 import BorderColorIcon from '@material-ui/icons/BorderColor';
@@ -18,7 +18,7 @@ const Description = () => {
     const [description, setDescription] = useState('');
 
     const headerButton = (
-        <IconButton className={classes.iconButton} onClick={() => dispatch(openModalsAction())}>
+        <IconButton className={classes.iconButton} onClick={() => dispatch(OPEN_MODALS.TRIGGER({ open: true }))}>
             <BorderColorIcon fontSize={'small'} />
         </IconButton>
     );

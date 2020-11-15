@@ -19,7 +19,7 @@ export const useStyles = makeStyles({
                 : props.title === 'Changed'
                 ? '#4caf50'
                 : props.title === 'Added'
-                ? '#1976d2'
+                ? '#8219d2'
                 : '#1976d2',
     },
 });

@@ -3,7 +3,7 @@ import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
 
-import { postTodoAction } from '../../../redux/todos/actions';
+import { ADD_TODO, postTodoAction } from '../../../redux/todos/actions';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
 import InputBase from '@material-ui/core/InputBase';
@@ -17,16 +17,16 @@ const TodoAddForm = () => {
     const dispatch = useDispatch();
     const category = useSelector(getCategorySelector);
 
-    const [value, setValue] = useState('');
+    const [title, setTitle] = useState('');
     const [focused, setFocused] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
-        dispatch(postTodoAction(category, value));
-        setValue('');
+        dispatch(ADD_TODO.TRIGGER({ category, title }));
+        setTitle('');
     };
 
-    const onChange = (e) => setValue(e.target.value);
+    const onChange = (e) => setTitle(e.target.value);
     const toggleFocused = () => setFocused((prevState) => !prevState);
 
     return (
@@ -35,7 +35,7 @@ const TodoAddForm = () => {
                 className={classes.input}
                 required
                 placeholder="Add new todo"
-                value={value || ''}
+                value={title || ''}
                 onChange={onChange}
                 onFocus={toggleFocused}
                 onBlur={toggleFocused}

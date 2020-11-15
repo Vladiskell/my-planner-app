@@ -89,15 +89,17 @@ export const getReports = async (category) => {
 };
 
 // post reports todo in database
-export const postReport = (category, title, id, status) => {
+export const postReport = (category, title, status) => {
     return reportsRef(category)
         .add({
-            id,
             title,
             status,
             date: Date.now(),
         })
-        .then(async (docRef) => {
+        .then(async function (docRef) {
+            await reportsRef(category).doc(docRef.id).update({
+                id: docRef.id,
+            });
             const data = await docRef.get();
             return data.data();
         });
@@ -111,4 +113,12 @@ export const deleteReport = async (category, id) => {
     item().then((docRef) => {
         reportsRef(category).doc(docRef.id).delete();
     });
+};
+
+// get report todo in database
+export const getReport = async (category, id) => {
+    const data = await reportsRef(category).get();
+    const item = async () => data.docs.find((doc) => id === doc.data().id);
+
+    return item().then((docRef) => docRef.id);
 };

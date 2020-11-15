@@ -2,8 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { useStyles } from './styles';
 import { useDispatch } from 'react-redux';
 
-import { openModalsAction } from '../../../redux/modals/actions';
-import { setCurrentTodoAction } from '../../../redux/todos/actions';
+import { OPEN_MODALS } from '../../../redux/modals/actions';
+import { SET_CURRENT_TODO } from '../../../redux/todos/actions';
 
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
@@ -50,8 +50,8 @@ const TodoMenu = (props) => {
                 title: 'Description',
                 icon: <BuildOutlinedIcon className={classes.menuIcon} />,
                 function: () => {
-                    dispatch(setCurrentTodoAction(props.id));
-                    dispatch(openModalsAction());
+                    dispatch(SET_CURRENT_TODO.TRIGGER({ id: props.id }));
+                    dispatch(OPEN_MODALS.TRIGGER({ open: true }));
                 },
             },
             {

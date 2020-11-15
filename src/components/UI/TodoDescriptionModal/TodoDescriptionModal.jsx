@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useStyles } from './styles';
 
 import { getModalsSelector } from '../../../redux/modals/selectors';
-import { closeModalsAction } from '../../../redux/modals/actions';
+import { CLOSE_MODALS, closeModalsAction } from '../../../redux/modals/actions';
 import { getCurrentTodoSelector } from '../../../redux/todos/selectors';
-import { postTodoDescriptionAction } from '../../../redux/todos/actions';
+import { EDIT_TODO_DESCRIPTION } from '../../../redux/todos/actions';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
 import Button from '@material-ui/core/Button';
@@ -21,22 +21,25 @@ const TodoDescriptionModal = () => {
     const dispatch = useDispatch();
 
     const modals = useSelector(getModalsSelector);
-    const currentCategory = useSelector(getCategorySelector);
+    const category = useSelector(getCategorySelector);
     const currentTodo = useSelector(getCurrentTodoSelector);
 
-    const [value, setValue] = useState('');
+    const [description, setDescription] = useState('');
 
     useEffect(() => {
         if (currentTodo !== undefined) {
-            setValue(currentTodo.description);
+            setDescription(currentTodo.description);
         }
     }, [currentTodo]);
 
-    const onClose = () => dispatch(closeModalsAction());
+    const onClose = () => dispatch(CLOSE_MODALS.TRIGGER({ open: false }));
 
-    const onChange = (event) => setValue(event.target.value);
+    const onChange = (event) => setDescription(event.target.value);
 
-    const onSubmit = () => dispatch(postTodoDescriptionAction(currentCategory, currentTodo.id, value));
+    const onSubmit = () => {
+        dispatch(EDIT_TODO_DESCRIPTION.TRIGGER({ category, id: currentTodo.id, description }));
+        dispatch(CLOSE_MODALS.TRIGGER({ open: false }));
+    };
 
     return (
         <div className={classes.root}>
@@ -48,7 +51,7 @@ const TodoDescriptionModal = () => {
                         label="Type todo description"
                         onChange={onChange}
                         type="text"
-                        value={value}
+                        value={description}
                         fullWidth
                         multiline
                     />

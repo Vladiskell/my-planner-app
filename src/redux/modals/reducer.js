@@ -1,9 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { closeModalsAction, openModalsAction } from './actions';
+import { CLOSE_MODALS, closeModalsAction, OPEN_MODALS, openModalsAction } from './actions';
 
 const modalsReducer = createReducer(false, {
-    [openModalsAction]: (state, action) => action.payload.open,
-    [closeModalsAction]: (state, action) => action.payload.open,
+    [OPEN_MODALS.TRIGGER]: (state, action) => action.payload.open,
+    [CLOSE_MODALS.TRIGGER]: (state, action) => action.payload.open,
 });
 
 export default modalsReducer;

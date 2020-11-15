@@ -1,67 +1,21 @@
-import * as types from './types';
+import actionsCreator from '../../utils/actionsCreator';
 
-export const getTodosAction = (category) => ({
-    type: types.GET_TODOS,
-    payload: { category },
-});
+export const GET_TODOS = actionsCreator('GET_TODOS');
 
-// ---------------------------------------------------------------------------------------------------------------------
-export const addTodoAction = (todo) => ({
-    type: types.ADD_TODO,
-    payload: { todo },
-});
+export const SET_TODOS = actionsCreator('SET_TODOS');
 
-export const postTodoAction = (category, value) => ({
-    type: types.POST_TODO,
-    payload: { category, value },
-});
+export const ADD_TODO = actionsCreator('ADD_TODO');
 
-export const setTodosAction = (todoList) => ({
-    type: types.SET_TODOS,
-    payload: { todoList },
-});
+export const DELETE_TODO = actionsCreator('DELETE_TODO');
 
-export const deleteTodoAction = (id) => ({
-    type: types.DELETE_TODO,
-    payload: { id },
-});
+export const SET_TODO_COMPLETED = actionsCreator('SET_TODO_COMPLETED');
 
-export const setTodoCompletedAction = (id) => ({
-    type: types.SET_TODO_COMPLETED,
-    payload: { id },
-});
+export const SET_TODO_IMPORTANT = actionsCreator('SET_TODO_IMPORTANT');
 
-export const setTodoImportantAction = (id) => ({
-    type: types.SET_TODO_IMPORTANT,
-    payload: { id },
-});
+export const SET_TODO_PROCESS = actionsCreator('SET_TODO_PROCESS');
 
-export const setTodoProcessAction = (id) => ({
-    type: types.SET_TODO_PROCESS,
-    payload: { id },
-});
+export const EDIT_TODO_TITLE = actionsCreator('EDIT_TODO_TITLE');
 
-export const editTodoTitleAction = (id, title) => ({
-    type: types.EDIT_TODO_TITLE,
-    payload: { id, title },
-});
+export const EDIT_TODO_DESCRIPTION = actionsCreator('EDIT_TODO_DESCRIPTION');
 
-export const editTodoDescriptionAction = (id, description) => ({
-    type: types.EDIT_TODO_DESCRIPTION,
-    payload: { id, description },
-});
-
-export const setCurrentTodoAction = (id) => ({
-    type: types.SET_CURRENT_TODO,
-    payload: { id },
-});
-
-export const postTodoDescriptionAction = (category, id, description) => ({
-    type: types.POST_TODO_DESCRIPTION,
-    payload: { category, id, description },
-});
-
-export const postTodoTitle = (category, id, title) => ({
-    type: types.POST_TODO_TITLE,
-    payload: { category, id, title },
-});
+export const SET_CURRENT_TODO = actionsCreator('EDIT_TODO_DESCRIPTION');

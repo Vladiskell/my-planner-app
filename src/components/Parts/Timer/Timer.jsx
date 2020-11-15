@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useStyles } from './styles';
-
-import * as API from '../../../api';
 import { useSelector } from 'react-redux';
+
 import { getCurrentTodoSelector, getProcessTodoSelector } from '../../../redux/todos/selectors';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
@@ -31,21 +30,13 @@ const Timer = () => {
     }`;
 
     const onStart = () => setIsActive(true);
-    const onPause = () => {
-        // const time = seconds + minutes * 60 + hours * 60 * 60;
-        setIsActive(false);
-        // API.postTimesheet(currentCategory, currentTodo.id, time);
-    };
+    const onPause = () => setIsActive(false);
     const onReset = () => {
         setIsActive(false);
         setTotalAmount(0);
     };
 
     useEffect(() => {
-        // if (currentTodo) {
-        //     setTotalAmount(currentTodo.timesheet.time);
-        // }
-
         if (isActive) {
             var interval = setInterval(() => {
                 setTotalAmount((prevState) => prevState + 1);

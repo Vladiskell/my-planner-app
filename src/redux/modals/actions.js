@@ -1,18 +1,5 @@
-import { createAction } from '@reduxjs/toolkit';
-import actionFabric from '../../utils/actionFabric';
+import actionsCreator from '../../utils/actionsCreator';
 
-export const openModalsAction = createAction('OPEN_MODALS', () => ({
-    payload: { open: true },
-}));
+export const OPEN_MODALS = actionsCreator('OPEN_MODALS');
 
-export const closeModalsAction = createAction('CLOSE_MODALS', () => ({
-    payload: { open: false },
-}));
-
-export const OPEN_MODALS = actionFabric('OPEN_MODALS', () => ({
-    payload: { open: true },
-}));
-
-export const CLOSE_MODALS = actionFabric('CLOSE_MODALS', () => ({
-    payload: { open: false },
-}));
+export const CLOSE_MODALS = actionsCreator('CLOSE_MODALS');

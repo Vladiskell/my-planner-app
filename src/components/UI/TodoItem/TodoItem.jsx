@@ -3,17 +3,14 @@ import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
 
-import * as API from '../../../api';
 import {
-    deleteTodoAction,
-    setCurrentTodoAction,
-    setTodoCompletedAction,
-    setTodoImportantAction,
-    setTodoProcessAction,
-    editTodoTitleAction,
-    postTodoTitle,
+    DELETE_TODO,
+    SET_CURRENT_TODO,
+    EDIT_TODO_TITLE,
+    SET_TODO_COMPLETED,
+    SET_TODO_IMPORTANT,
+    SET_TODO_PROCESS,
 } from '../../../redux/todos/actions';
-import { ADD_REPORT } from '../../../redux/reports/actions';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
 import { Typography } from '@material-ui/core';
@@ -28,69 +25,39 @@ import TodoMenu from '../TodoMenu/TodoMenu';
 const TodoItem = ({ props }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const currentCategory = useSelector(getCategorySelector);
+    const category = useSelector(getCategorySelector);
 
     const [title, setTitle] = useState(props.title);
     const [isEdit, setIsEdit] = useState(false);
+    const [checked, setChecked] = useState(props.statuses.completed);
 
     const onChange = (e) => setTitle(e.target.value);
 
     const onEdit = () => setIsEdit(true);
 
-    const setCurrentTodo = () => dispatch(setCurrentTodoAction(props.id));
+    const setCurrentTodo = () => dispatch(SET_CURRENT_TODO.TRIGGER({ id: props.id }));
+
+    const onDelete = () => dispatch(DELETE_TODO.TRIGGER({ category, id: props.id, title }));
 
     const onEditTitle = () => {
-        dispatch(postTodoTitle(currentCategory, props.id, title));
+        dispatch(EDIT_TODO_TITLE.TRIGGER({ category, id: props.id, title }));
         setIsEdit(false);
     };
 
-    const onCompleted = async () => {
+    const onCompleted = () => {
         const value = !props.statuses.completed;
-
-        await API.updateTodo(currentCategory, props.id, 'completed', value);
-
-        if (value) {
-            await API.postReport(currentCategory, title, props.id, 'Completed').then((report) => {
-                dispatch(ADD_REPORT.SUCCESS({ report }));
-            });
-        }
-
-        dispatch(setTodoCompletedAction(props.id));
+        setChecked(!checked);
+        dispatch(SET_TODO_COMPLETED.TRIGGER({ category, id: props.id, value, title }));
     };
 
-    const onImportant = async () => {
+    const onImportant = () => {
         const value = !props.statuses.important;
-
-        await API.updateTodo(currentCategory, props.id, 'important', value);
-
-        if (value) {
-            await API.postReport(currentCategory, title, props.id, 'Important').then((report) => {
-                dispatch(ADD_REPORT.SUCCESS({ report }));
-            });
-        }
-
-        dispatch(setTodoImportantAction(props.id));
+        dispatch(SET_TODO_IMPORTANT.TRIGGER({ category, id: props.id, value, title }));
     };
 
-    const onProcess = async () => {
+    const onProcess = () => {
         const value = !props.statuses.process;
-
-        await API.updateTodo(currentCategory, props.id, 'process', value);
-
-        value &&
-            (await API.postReport(currentCategory, title, props.id, 'In process').then((report) => {
-                dispatch(ADD_REPORT.SUCCESS({ report }));
-            }));
-
-        dispatch(setTodoProcessAction(props.id));
-    };
-
-    const onDelete = async () => {
-        await API.deleteTodo(currentCategory, props.id);
-        await API.postReport(currentCategory, title, props.id, 'Deleted').then((report) => {
-            dispatch(ADD_REPORT.SUCCESS({ report }));
-        });
-        dispatch(deleteTodoAction(props.id));
+        dispatch(SET_TODO_PROCESS.TRIGGER({ category, id: props.id, value, title }));
     };
 
     return (

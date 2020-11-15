@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useStyles } from './styles';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getTodosAction } from '../../../redux/todos/actions';
+import { GET_TODOS, getTodosAction } from '../../../redux/todos/actions';
 import { getTodosSelector } from '../../../redux/todos/selectors';
 import { getCategorySelector } from '../../../redux/category/selectors';
 
@@ -15,17 +15,17 @@ const TodoList = ({ filter }) => {
     const dispatch = useDispatch();
 
     const todos = useSelector(getTodosSelector);
-    const currentCategory = useSelector(getCategorySelector);
+    const category = useSelector(getCategorySelector);
 
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        dispatch(getTodosAction(currentCategory));
+        dispatch(GET_TODOS.TRIGGER({ category }));
 
         if (todos.length > 1) {
             setIsLoading(true);
         }
-    }, [currentCategory]);
+    }, [category]);
 
     const visibleTodos = () => {
         switch (filter) {
